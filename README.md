@@ -25,5 +25,5 @@ cHelper is a web application that allows users to test their own algorithms on r
 
 ### LINKS:
 - Python website tutorial: https://www.youtube.com/watch?v=dam0GPOAvVI 
-- Get Crypto Price Data from CoinMarketCap: https://www.youtube.com/watch?v=opFegHZ7pUU
+- Get Crypto Price Data from CoinMarketCap: https://www.youtube.com/watch?v=opFegHZ7pUU AND https://coinmarketcap.com/api/documentation/v1/#tag/cryptocurrency
 - Live Graph in Flask: https://towardsdatascience.com/web-visualization-with-plotly-and-flask-3660abf9c946#:~:text=The%20Flask%20app%20does%20a,it%20can%20display%20the%20charts AND https://plotly.com/python/range-slider/
