@@ -1,0 +1,91 @@
+21 lines (21 sloc)  632 Bytes
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %}
+{% block styling %} {{super()}} <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/home.css') }}" /> {% endblock %} 
+
+{% block content %}
+<h1 align="center">cHelper</h1>
+
+<div class="row">
+  <div class="col-4">
+    <div class="card-columns">
+
+      <div id="wallet-details" class="card">
+        <div class="card-body">
+          <h3 class="card-title">Wallet:</h3>
+
+          <div>
+            {% for key, value in wallet_dict.items() %}
+              <p class="card-text">{{key}}: {{value}} (S${{"%.2f"|format(value*prices_dict[key])}})</p>  
+            {% endfor %}
+          </div>
+
+          <div>
+            <div id='wallet_breakdown_graph' class='wallet_breakdown_graph'”></div>
+            <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+            <script type='text/javascript'>
+              var graphs = {{wallet_breakdown_graphJSON | safe}};
+              Plotly.plot('wallet_breakdown_graph',graphs,{});
+            </script>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="coin-details" class="card">
+        <div class="card-body">
+          <h3 class="card-title">Current prices:</h3>
+            {% for key, value in prices_dict.items() %}
+              <p class="card-text">{{key}}: S${{"%.3f"|format(value)}}</p>
+            {% endfor %}
+        </div>
+      </div>
+
+
+
+      <div id="update-wallet-form" class="card">
+        <div class="card-body">
+          <h3 class="card-title">Update wallet<h3>
+            <form method="POST">
+              <div class="form-group">
+                <select name="update_wallet_coin" id="update_wallet_coin">
+                  {% for key in wallet_dict.keys() %}
+                    <option value="{{key}}" selected>{{key}}</option>
+                  {% endfor %}
+                </select>
+              </div> 
+
+              <div class="form-group">
+                <input
+                  type="number"
+                  step="0.000001"
+                  class="form-control mx-auto"
+                  id="update_wallet_value"
+                  name="update_wallet_value"
+                  placeholder="How much would you like to add? (To remove, enter a negative value)"
+                >
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="col-8">
+    <div class="card card-body">
+      <h3 class="card-title">Graph (Make it live?)</h3>
+      <div id='coin_hist_values_graph' class='coin_hist_values_graph'”></div>
+      <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+      <script type='text/javascript'>
+        var graphs = {{home_graphJSON | safe}};
+        Plotly.plot('coin_hist_values_graph',graphs,{});
+      </script>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
