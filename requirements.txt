@@ -1,3 +1,9 @@
-gunicorn
 flask
-flask_login
+flask-login
+flask-sqlalchemy
+gunicorn
+heapdict
+numpy
+pandas
+plotly
+virtualenv
