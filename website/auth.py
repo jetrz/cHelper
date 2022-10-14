@@ -1,15 +1,18 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User, Wallet, recurringBuySettings
-from.coins import COINS
 from . import db
+from .coins import COINS
+from .models import User, Wallet, recurringBuySettings
+
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['POST', 'GET'])
 def login():
-    #request.form is the data that was sent when this route was accessed
+    """
+    Login page. Redirects to dashboard if successful.
+    """ 
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -18,7 +21,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
-                login_user(user, remember=True) #remembers that user is logged in until user logs out/server is refreshed etc.. 
+                login_user(user, remember=True) # remembers that user is logged in until user logs out/server is refreshed etc.. 
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password!', category='error')
@@ -28,13 +31,19 @@ def login():
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
-@login_required #this route can only be used if user is logged in
+@login_required # this route can only be used if user is logged in
 def logout():
+    """
+    Logout page.
+    """ 
     logout_user()
     return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['POST', 'GET'])
 def sign_up():
+    """
+    Signup page. Performs various checks and adds user to DB if successful.
+    """ 
     if request.method == 'POST':
         email = request.form.get('email')
         first_name = request.form.get('firstName')
@@ -42,22 +51,24 @@ def sign_up():
         password2 = request.form.get('password2')
         
         user = User.query.filter_by(email=email).first()
-        if user:
+        if not (email and first_name and password1 and password2):
+            flash('Please fill in all fields!', category='error')
+        elif user:
             flash('Email already in use!', category='error')
         elif password1 != password2:
             flash('Passwords do not match!', category='error')
         else:
-            #add user to database
+            # add user to database
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             
-            #add wallet associated to user
+            # add wallet associated to user
             new_wallet = Wallet(uid=new_user.uid)
             db.session.add(new_wallet)
             db.session.commit()
             
-            #add settings entry for all algos associated to user
+            # add settings entry for all algos associated to user
             for i in range(len(COINS)):
                 new_recurringBuySettings = recurringBuySettings(coin=COINS[i], uid=new_user.uid)
                 db.session.add(new_recurringBuySettings)

@@ -1,66 +1,73 @@
-21 lines (21 sloc)  632 Bytes
 {% extends "base.html" %} 
-{% block title %}Recurring Buy{% endblock %}
-{% block styling %}{% endblock %} 
+{% block title %}cHelper: Recurring Buy{% endblock %}
+{% block styling %}{% endblock %}
+{% block header %} Recurring Buy {% endblock %} 
 
 {% block content %}
-<h1 align="center">Recurring Buy</h1>
+<h3>Current Status</h3>
 
-<div>
-    <h3>Current Status</h3>
-    {% for key, value in settings_dict.items() %}
-      <p> {{key}}: </p>
-      {% if value.isOn %}
-          <p>Recurring Buy is currently activated</p>
-          <p>Interval: {{value.interval}} days</p>
-          <p>Qty: {{value.qty}}</p>
-      {% else %}
-          <p>Recurring Buy is currently not activated</p>
-      {% endif %}
-    {% endfor %}
+<div class="card-group" style="margin-bottom: 5vh">
+  {% for key, value in settings_dict.items() %}
+    <div class="card text-white bg-dark">
+      <div class="card-header"><strong> {{key}} </strong></div>
+      <div class="card-body">
+        {% if value.isOn %}
+            <p>Recurring Buy is currently activated</p>
+            <p>Interval: {{value.interval}} days</p>
+            <p>Qty: {{value.qty}}</p>
+        {% else %}
+            <p>Recurring Buy is currently not activated</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
 </div>
 
-<div>
-    <h3>Edit Algo</h3>
-    <form method="POST">
-        <div class="form-group">
-          <select name="recurring_buy_coin" id="recurring_buy_coin">
-            {% for key in settings_dict.keys() %}
-              <option value="{{key}}" selected>{{key}}</option>
-            {% endfor %}
-          </select>
-        </div> 
 
-        <div class="form-group">
-          <select name="recurring_buy_isOn" id="recurring_buy_isOn">
-              <option value=1>On</option>
-              <option value=0>Off</option>
-          </select>
-        </div>
+<h3>Edit Algo</h3>
+<form method="POST">
+<div class="form-row">
+  <div class="form-group">
+    <select name="recurring_buy_coin" id="recurring_buy_coin" class="form-control">
+      {% for key in settings_dict.keys() %}
+        <option value="{{key}}" selected>{{key}}</option>
+      {% endfor %}
+    </select>
+  </div> 
 
-        <div class="form-group">
-          <input
-            type="number"
-            step="0.000001"
-            class="form-control mx-auto"
-            id="recurring_buy_interval"
-            name="recurring_buy_interval"
-            placeholder="Interval (Days)"
-          >
-        </div>
-
-        <div class="form-group">
-            <input
-              type="number"
-              step="0.000001"
-              class="form-control mx-auto"
-              id="recurring_buy_qty"
-              name="recurring_buy_qty"
-              placeholder="Quantity to buy"
-            >
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <div class="form-group">
+    <select name="recurring_buy_isOn" id="recurring_buy_isOn" class="form-control">
+        <option value=1>On</option>
+        <option value=0>Off</option>
+    </select>
+  </div>
 </div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <input
+      type="number"
+      step="0.000001"
+      class="form-control mx-auto"
+      id="recurring_buy_interval"
+      name="recurring_buy_interval"
+      placeholder="Interval (Days)"
+    >
+  </div>
+
+  <div class="form-group col-md-6">
+      <input
+        type="number"
+        step="0.000001"
+        class="form-control mx-auto"
+        id="recurring_buy_qty"
+        name="recurring_buy_qty"
+        placeholder="Quantity to buy"
+      >
+  </div>
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 {% endblock %}

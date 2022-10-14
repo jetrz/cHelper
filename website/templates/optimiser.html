@@ -1,0 +1,146 @@
+{% extends "base.html" %} 
+{% block title %}cHelper: Optimiser{% endblock %}
+{% block styling %}{% endblock %}
+{% block header %} Optimiser {% endblock %} 
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div id="optimiser-input" class="card">
+      <div class="card-body">
+        <h3 class="card-title">Set Parameters</h3>
+        <form method="POST">
+          <div class="form-group row">
+            <label for="nTotalTraders" class="col-sm-2 col-form-label">Total Traders</label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                step="1"
+                class="form-control mx-auto"
+                id="nTotalTraders"
+                name="nTotalTraders"
+                placeholder="Total number of traders"
+              >
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="nIterations" class="col-sm-2 col-form-label">Iterations to run</label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                step="1"
+                class="form-control mx-auto"
+                id="nIterations"
+                name="nIterations"
+                placeholder="No. of iterations to run optimiser"
+              >
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="rsiTimeframe" class="col-sm-2 col-form-label">RSI Timeframe</label>
+            <div class="col-sm-10">
+              <input
+                type="number"
+                step="1"
+                class="form-control mx-auto"
+                id="rsiTimeframe"
+                name="rsiTimeframe"
+                value="14"
+                placeholder="RSI Timeframe (Days). Default is 14"
+              >
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if graphFitnessJSON is defined %}
+<div class="row">
+  <div class="col-12">
+    <div id="optimiser-graph-fitness" class="card">
+      <div class="card-body">
+        <h3 class="card-title">Fitness/Profitability of coins</h3>
+        <div>
+          <div id='graphFitness' class='graphFitness'”></div>
+          <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+          <script type='text/javascript'>
+            var graphs = {{graphFitnessJSON | safe}};
+            Plotly.plot('graphFitness',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if graphVarsJSON is defined %}
+<div class="row">
+  <div class="col-12">
+    <div id="optimiser-graph-vars" class="card">
+      <div class="card-body">
+        <h3 class="card-title">Vars of coins</h3>
+        <div>
+          <div id='graphVars' class='graphVars'”></div>
+          <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+          <script type='text/javascript'>
+            var graphs = {{graphVarsJSON | safe}};
+            Plotly.plot('graphVars',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if graphTradersJSON is defined %}
+<div class="row">
+  <div class="col-12">
+    <div id="optimiser-graph-traders" class="card">
+      <div class="card-body">
+        <h3 class="card-title">Buyers, Sellers and Traders of coins</h3>
+        <div>
+          <div id='graphTraders' class='graphTraders'”></div>
+          <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+          <script type='text/javascript'>
+            var graphs = {{graphTradersJSON | safe}};
+            Plotly.plot('graphTraders',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if graphRSIJSON is defined %}
+<div class="row">
+  <div class="col-12">
+    <div id="optimiser-graph-RSI" class="card">
+      <div class="card-body">
+        <h3 class="card-title">RSI of coins</h3>
+        <div>
+          <div id='graphRSI' class='graphRSI'”></div>
+          <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+          <script type='text/javascript'>
+            var graphs = {{graphRSIJSON | safe}};
+            Plotly.plot('graphRSI',graphs,{});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

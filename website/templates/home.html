@@ -1,11 +1,10 @@
-21 lines (21 sloc)  632 Bytes
 {% extends "base.html" %} 
-{% block title %}Home{% endblock %}
-{% block styling %} {{super()}} <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/home.css') }}" /> {% endblock %} 
+{% block title %}cHelper: Home{% endblock %}
+{% block styling %} {{super()}} <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/home.css') }}" /> {% endblock %}
+
+{% block header %} cHelper {% endblock %}
 
 {% block content %}
-<h1 align="center">cHelper</h1>
-
 <div class="row">
   <div class="col-4">
     <div class="card-columns">
@@ -77,7 +76,7 @@
 
   <div class="col-8">
     <div class="card card-body">
-      <h3 class="card-title">Graph (Make it live?)</h3>
+      <h3 class="card-title">Graph (WIP)</h3>
       <div id='coin_hist_values_graph' class='coin_hist_values_graph'”></div>
       <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
       <script type='text/javascript'>

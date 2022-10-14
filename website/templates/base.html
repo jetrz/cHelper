@@ -14,8 +14,13 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="{{ url_for('static', filename='styles/base.css') }}" 
+    />
 
-    <title>{% block title %}Home{% endblock %}</title>
+    <title>{% block title %}cHelper!{% endblock %}</title>
     
     {%block styling%}{% endblock %}
   </head>
@@ -39,6 +44,7 @@
               <a class="dropdown-item nav-item nav-link" id="recurring-buy" href="/recurring-buy" style="color:black">Recurring Buy</a>
             </div>
           </div>
+          <a class="nav-item nav-link" id="optimiser" href="/optimiser">Optimiser</a>
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
@@ -66,6 +72,7 @@
     </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
+    <h1 class="header" align="center">{% block header %} {% endblock %}</h1>
     <div class="container">{% block content %} {% endblock %}</div>
 
     <script
