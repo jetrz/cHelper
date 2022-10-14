@@ -251,7 +251,7 @@ def optimiser():
             graphRSIJSON = json.dumps(figRSI, cls=plotly.utils.PlotlyJSONEncoder)
             graphVarsJSON = json.dumps(figVars, cls=plotly.utils.PlotlyJSONEncoder)    
             
-            flash('Optimised!', category='error')    
+            flash('Optimised!', category='success')    
             return render_template("optimiser.html", 
                                 user=current_user,
                                 graphFitnessJSON=graphFitnessJSON,

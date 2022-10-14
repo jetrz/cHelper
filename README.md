@@ -1,6 +1,7 @@
 # Crypto Helper!
 
 cHelper is a web application that allows users to test their own algorithms on real time crypto data. Made with Flask-SQLAlchemy.
+Available at https://givemethemoneyy.herokuapp.com/
 
 ### STRUCTURE:
 - Run application from main.py.
@@ -21,6 +22,7 @@ cHelper is a web application that allows users to test their own algorithms on r
 
 ### BUGS:
 - HistValues tracker is a bit wonky. Mayb something to do w number of threads being created?
+- Authentication immediately after login is a bit wonky. Sometimes might cause the wrong navbar to appear. 
 
 ### LINKS:
 - Python website tutorial: https://www.youtube.com/watch?v=dam0GPOAvVI 
