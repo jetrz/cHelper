@@ -6,4 +6,5 @@ heapdict
 numpy
 pandas
 plotly
+requests
 virtualenv
